@@ -1,9 +1,16 @@
 from django.contrib import admin
-from django.conf.urls import url, include
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
+from music.views import MusicViewSet
 
-from music.views import hello_view
+router = DefaultRouter()
+router.register('music', MusicViewSet)
 
 urlpatterns = [
-    url('admin/', admin.site.urls),
-    url('hello/', hello_view), #建立路由
+    # path('admin/', admin.site.urls),
+    # for rest_framework
+    path('api/', include(router.urls)),
+    # for rest_framework auth
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+
 ]
